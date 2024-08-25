@@ -1,0 +1,131 @@
+{
+    "reviews": [
+      {
+        "professor": "Dr. Alice Johnson",
+        "subject": "Computer Science",
+        "stars": 4,
+        "review": "Dr. Johnson is very knowledgeable and approachable. The lectures are engaging, but the exams can be challenging."
+      },
+      {
+        "professor": "Dr. Bob Smith",
+        "subject": "Mathematics",
+        "stars": 5,
+        "review": "Dr. Smith is an excellent professor who makes complex concepts easy to understand. Highly recommend his classes!"
+      },
+      {
+        "professor": "Dr. Clara Brown",
+        "subject": "Physics",
+        "stars": 3,
+        "review": "Dr. Brown is competent but tends to rush through the material. Could benefit from a clearer explanation of some topics."
+      },
+      {
+        "professor": "Dr. David Lee",
+        "subject": "Chemistry",
+        "stars": 4,
+        "review": "Dr. Lee is passionate about chemistry and provides great hands-on labs. Occasionally, lectures can be a bit dry."
+      },
+      {
+        "professor": "Dr. Emily Clark",
+        "subject": "Biology",
+        "stars": 5,
+        "review": "Dr. Clark is fantastic! Her enthusiasm and in-depth knowledge make her classes a joy to attend."
+      },
+      {
+        "professor": "Dr. Frank Harris",
+        "subject": "Economics",
+        "stars": 2,
+        "review": "Dr. Harris has a lot of knowledge but struggles to communicate it effectively. The class was often disorganized."
+      },
+      {
+        "professor": "Dr. Grace Wilson",
+        "subject": "History",
+        "stars": 4,
+        "review": "Dr. Wilson’s lectures are engaging and well-organized. She provides good historical context but can be strict on deadlines."
+      },
+      {
+        "professor": "Dr. Henry Thompson",
+        "subject": "Philosophy",
+        "stars": 3,
+        "review": "Dr. Thompson’s class is intellectually stimulating, but his grading is inconsistent and feedback is often delayed."
+      },
+      {
+        "professor": "Dr. Irene Martinez",
+        "subject": "Literature",
+        "stars": 4,
+        "review": "Dr. Martinez is passionate about literature and encourages lively discussions. The workload is heavy, but rewarding."
+      },
+      {
+        "professor": "Dr. John Adams",
+        "subject": "Political Science",
+        "stars": 5,
+        "review": "Dr. Adams is a great professor with real-world insights. His classes are thought-provoking and he’s very approachable."
+      },
+      {
+        "professor": "Dr. Karen Moore",
+        "subject": "Sociology",
+        "stars": 3,
+        "review": "Dr. Moore covers interesting topics but her lectures can be monotonous. More interactive elements would improve the class."
+      },
+      {
+        "professor": "Dr. Leo Scott",
+        "subject": "Engineering",
+        "stars": 4,
+        "review": "Dr. Scott is knowledgeable and his problem-solving approach is very practical. The pace can be intense, though."
+      },
+      {
+        "professor": "Dr. Megan Green",
+        "subject": "Art History",
+        "stars": 5,
+        "review": "Dr. Green’s passion for art is infectious. Her lectures are inspiring and she provides excellent feedback on assignments."
+      },
+      {
+        "professor": "Dr. Nathan Carter",
+        "subject": "Statistics",
+        "stars": 3,
+        "review": "Dr. Carter’s class is data-heavy and challenging. He’s knowledgeable but sometimes lacks clarity in his explanations."
+      },
+      {
+        "professor": "Dr. Olivia Young",
+        "subject": "Environmental Science",
+        "stars": 4,
+        "review": "Dr. Young is committed to environmental issues and her enthusiasm is evident. Her classes are informative and engaging."
+      },
+      {
+        "professor": "Dr. Paul King",
+        "subject": "Linguistics",
+        "stars": 2,
+        "review": "Dr. King’s lectures are often disorganized and he is not very responsive to student questions. Improvement needed."
+      },
+      {
+        "professor": "Dr. Quinn Taylor",
+        "subject": "Astronomy",
+        "stars": 5,
+        "review": "Dr. Taylor is amazing! Her passion for the subject shines through and she makes complex concepts accessible and exciting."
+      },
+      {
+        "professor": "Dr. Rachel Evans",
+        "subject": "Music",
+        "stars": 4,
+        "review": "Dr. Evans is a talented musician and teacher. Her classes are dynamic and she provides a lot of practical experience."
+      },
+      {
+        "professor": "Dr. Sam Robinson",
+        "subject": "Theatre",
+        "stars": 3,
+        "review": "Dr. Robinson’s classes are creative but sometimes lack structure. Great for hands-on learning but needs better organization."
+      },
+      {
+        "professor": "Dr. Tina Lewis",
+        "subject": "Education",
+        "stars": 4,
+        "review": "Dr. Lewis is very supportive and provides valuable insights into educational theory. Her feedback is constructive and helpful."
+      },
+      {
+        "professor": "Dr. Ulysses Brooks",
+        "subject": "Finance",
+        "stars": 5,
+        "review": "Dr. Brooks is a fantastic professor with real-world experience. His lectures are engaging and he is always available for help."
+      }
+    ]
+  }
+  

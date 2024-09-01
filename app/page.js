@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
@@ -17,40 +17,46 @@ export default function Home() {
   const [message, setMessage] = useState('');
 
   const sendMessage = async () => {
-    const updatedMessages = [...messages, { role: "user", content: message }];
-
+    const userMessage = { role: "user", content: message };
+    const updatedMessages = [...messages, userMessage];
+    
     // Add the user's message to the chat
     setMessages(updatedMessages);
-
+    
     setMessage('');
-
+    
     // Fetch the assistant's response
-    const response = await fetch('/api/chat', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(updatedMessages),
-    });
-
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
-
-    let result = '';
-    reader.read().then(function processText({ done, value }) {
-      if (done) return;
-
-      const text = decoder.decode(value || new Uint8Array(), { stream: true });
-      setMessages((messages) => {
-        const lastMessage = messages[messages.length - 1];
-        return [
-          ...messages.slice(0, messages.length - 1),
-          { ...lastMessage, content: lastMessage.content + text }
-        ];
+    try {
+      const response = await fetch('/api/chat', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedMessages),
       });
+      
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let result = '';
 
-      return reader.read().then(processText);
-    });
+      const processText = async () => {
+        const { done, value } = await reader.read();
+        if (done) {
+          // Add the assistant's response as a new message
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { role: "assistant", content: result }
+          ]);
+          return;
+        }
+        result += decoder.decode(value, { stream: true });
+        processText();
+      };
+      
+      processText();
+    } catch (error) {
+      console.error("Error fetching assistant response:", error);
+    }
   };
 
   const renderMessageContent = (content, role) => {
@@ -58,36 +64,18 @@ export default function Home() {
       borderRadius: 2,
       p: 2,
       maxWidth: '80%',
-      overflowWrap: 'break-word', // Use CSS for word break
+      overflowWrap: 'break-word',
       wordBreak: 'break-word',
     };
 
-    if (role === 'user') {
-      return (
-        <Box {...boxProps} bgcolor='purple' color='white'>
-          {content}
-        </Box>
-      );
-    } else {
-      // Split the response content into user query and assistant response
-      const assistantResponse = content.split('Assistant:')[1]?.trim();
-      const userQuery = content.split('Assistant:')[0]?.trim();
-  
-      return (
-        <Stack spacing={2}>
-          {userQuery && userQuery !== '' && (
-            <Box {...boxProps} bgcolor='blue' color='white'>
-              {userQuery}
-            </Box>
-          )}
-          {assistantResponse && assistantResponse !== '' && (
-            <Box {...boxProps} bgcolor='blue' color='white'>
-              {assistantResponse}
-            </Box>
-          )}
-        </Stack>
-      );
-    }
+    // Determine background color based on the role
+    const bgColor = role === 'user' ? '#d1c4e9' : '#bbdefb'; // Light purple for user, light blue for assistant
+
+    return (
+      <Box {...boxProps} bgcolor={bgColor} color='black'>
+        {content}
+      </Box>
+    );
   };
 
   return (

@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { Pinecone } from '@pinecone-database/pinecone';
 import axios from 'axios';
 
-const systemPrompt = `You are a highly intelligent and helpful RateMyProfessor agent designed to assist students in finding the best professors according to their queries. For every student question, you will retrieve and rank the top 3 professors that best match their criteria using Retrieval-Augmented Generation (RAG).
+const systemPrompt = `
+You are a highly intelligent and helpful RateMyProfessor agent designed to assist students in finding the best professors according to their queries. For every student question, you will retrieve and rank the top 3 professors that best match their criteria using Retrieval-Augmented Generation (RAG).
 
 Your responses should include the following details for each professor:
 
@@ -16,7 +17,8 @@ When responding:
 - Prioritize relevance to the student's query.
 - If the student asks for specific attributes (e.g., "best for tough courses" or "most approachable"), make sure to filter and rank accordingly.
 - Provide a brief summary of why each professor made the top 3 list.
-- End each response with a question to keep the conversation going, inviting the student to ask for more details or explore other professors.`;
+- End each response with a question to keep the conversation going, inviting the student to ask for more details or explore other professors.
+`;
 
 export async function POST(req) {
     try {
@@ -75,23 +77,22 @@ export async function POST(req) {
             const stars = metadata.stars || 'N/A';
             const review = metadata.review || 'N/A';
 
-            resultString += 
-`Professor: ${professor}
+            resultString += `
+Professor: ${professor}
 Review Highlights: ${review}
 Stars: ${stars}
 Subject: ${subject}
 \n`;
         });
 
-        const lastMessage = data[data.length - 1];
-        const lastMessageContent = lastMessage.content + resultString;
-        const lastDataWithoutLastMessage = data.slice(0, data.length - 1);
+        // Extract relevant user message content, excluding the introductory message
+        const userMessages = data.filter(msg => !msg.content.includes("Hi, I'm the Rate My Professor support assistant"));
+        const lastMessageContent = resultString;
 
-        // Combine system prompt and user message content into a single string
+        // Combine user messages content into a single string for processing
         const combinedInputs = [
-            systemPrompt,
-            ...lastDataWithoutLastMessage.map((msg) => `User: ${msg.content}`),
-            `User: ${lastMessageContent}`
+            ...userMessages.map((msg) => `User: ${msg.content}`),
+            `Assistant: ${lastMessageContent}`
         ].join('\n\n');
 
         // Generate a natural language response using Mistral
@@ -104,6 +105,7 @@ Subject: ${subject}
             headers: { Authorization: `Bearer ${hf_token}` }
         });
 
+        // Return the generated response correctly labeled
         return NextResponse.json(completionResponse.data);
     } catch (error) {
         console.error('Error:', error.response ? error.response.data : error.message);

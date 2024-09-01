@@ -33,24 +33,13 @@ export default function Home() {
       body: JSON.stringify(updatedMessages),
     });
 
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
+    const responseData = await response.json();
+    const assistantMessage = responseData.generated_text || "Sorry, I couldn't process your request.";
 
-    let result = '';
-    reader.read().then(function processText({ done, value }) {
-      if (done) return;
-
-      const text = decoder.decode(value || new Uint8Array(), { stream: true });
-      setMessages((messages) => {
-        const lastMessage = messages[messages.length - 1];
-        return [
-          ...messages.slice(0, messages.length - 1),
-          { ...lastMessage, content: lastMessage.content + text }
-        ];
-      });
-
-      return reader.read().then(processText);
-    });
+    setMessages((messages) => [
+      ...messages,
+      { role: "assistant", content: assistantMessage }
+    ]);
   };
 
   const renderMessageContent = (content, role) => {
@@ -58,8 +47,8 @@ export default function Home() {
       borderRadius: 2,
       p: 2,
       maxWidth: '80%',
-      overflowWrap: 'break-word', // Use CSS for word break
-      wordBreak: 'break-word',
+      overflowWrap: 'break-word', // Use camelCase for word break
+      wordBreak: 'break-word', // Use camelCase for word break
     };
 
     if (role === 'user') {
@@ -69,23 +58,10 @@ export default function Home() {
         </Box>
       );
     } else {
-      // Split the response content into user query and assistant response
-      const assistantResponse = content.split('Assistant:')[1]?.trim();
-      const userQuery = content.split('Assistant:')[0]?.trim();
-  
       return (
-        <Stack spacing={2}>
-          {userQuery && userQuery !== '' && (
-            <Box {...boxProps} bgcolor='blue' color='white'>
-              {userQuery}
-            </Box>
-          )}
-          {assistantResponse && assistantResponse !== '' && (
-            <Box {...boxProps} bgcolor='blue' color='white'>
-              {assistantResponse}
-            </Box>
-          )}
-        </Stack>
+        <Box {...boxProps} bgcolor='blue' color='white'>
+          {content}
+        </Box>
       );
     }
   };

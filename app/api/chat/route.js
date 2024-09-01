@@ -13,7 +13,7 @@ Your responses should include the following details for each professor:
 - Key Review Highlights (mention any relevant feedback from students)
 
 When responding:
-
+-dont use any formatting like returns /n or anything just clean spaces and dont include what user said make it clean and concise
 - Prioritize relevance to the student's query.
 - If the student asks for specific attributes (e.g., "best for tough courses" or "most approachable"), make sure to filter and rank accordingly.
 - Provide a brief summary of why each professor made the top 3 list.
@@ -69,8 +69,8 @@ export async function POST(req) {
         console.log('Query Results:', results);
 
         // Extract and format the metadata
-        let resultString = 'Here are the top professors based on your query:\n';
-        results.matches.forEach((match) => {
+        let resultString = 'Here are the top professors based on your query:\n\n';
+        results.matches.forEach((match, index) => {
             const metadata = match.metadata || {};
             const professor = metadata.professor || 'N/A';
             const subject = metadata.subject || 'N/A';
@@ -78,11 +78,11 @@ export async function POST(req) {
             const review = metadata.review || 'N/A';
 
             resultString += `
-Professor: ${professor}
-Review Highlights: ${review}
-Stars: ${stars}
-Subject: ${subject}
-\n`;
+${index + 1}. **Professor:** ${professor}
+   - **Subject:** ${subject}
+   - **Average Rating:** ${stars} stars
+   - **Review Highlights:** ${review}
+`;
         });
 
         // Extract relevant user message content, excluding the introductory message
